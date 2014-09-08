@@ -26,28 +26,30 @@ bool FirstRun = true;
 
 int deinit()
 {
-   double Oben    = MathRound(110*Hoch)/100;
-   double Unten   = MathRound(80*Tief)/100;
+//   double Oben    = MathRound(110*Hoch)/100;
+//   double Unten   = MathRound(80*Tief)/100;
+   double Oben    = Hoch;
+   double Unten   = Tief;
  
-   double AbSpace = 0.01*Line1Space;   
+   double AbSpace = 0.001*Line1Space;   
    for(double i=0; i<=Oben; i+=AbSpace)
    {
       if(i<Unten) continue;
-      ObjectDelete(LineText+DoubleToStr(i,2));
+      ObjectDelete(LineText+DoubleToStr(i,3));
    }
    
-   AbSpace = 0.01*Line2Space;
+   AbSpace = 0.001*Line2Space;
    for(double j=0; j<=Oben; j+=AbSpace)
    {
       if(j<Unten) continue;
-      ObjectDelete(LineText+DoubleToStr(j,2));
+      ObjectDelete(LineText+DoubleToStr(j,3));
    }
    
-   AbSpace = 0.01*Line3Space;
+   AbSpace = 0.001*Line3Space;
    for(double k=0; k<=Oben; k+=AbSpace)
    {
       if(k<Unten) continue;
-      ObjectDelete(LineText+DoubleToStr(k,2));
+      ObjectDelete(LineText+DoubleToStr(k,3));
    }
    
    return(0);
@@ -57,8 +59,8 @@ int start()
 {
    if(FirstRun)
    {
-      Hoch = NormalizeDouble( High[iHighest(NULL,0,MODE_HIGH,Bars-1,0)], 2 );
-      Tief = NormalizeDouble( Low[iLowest(NULL,0,MODE_LOW,Bars-1,0)], 2 );
+      Hoch = NormalizeDouble( High[iHighest(NULL,0,MODE_HIGH,Bars-1,0)], 3 );
+      Tief = NormalizeDouble( Low[iLowest(NULL,0,MODE_LOW,Bars-1,0)], 3 );
       FirstRun = false;
    }
    DrawLines();
@@ -67,14 +69,16 @@ int start()
 
 void DrawLines()
 {
-   double Oben    = MathRound(110*Hoch)/100;
-   double Unten   = MathRound(80*Tief)/100;
+//   double Oben    = MathRound(110*Hoch)/100;
+//   double Unten   = MathRound(80*Tief)/100;
+   double Oben    = Hoch;
+   double Unten   = Tief;
 
-   double AbSpace = 0.01*Line1Space;
+   double AbSpace = 0.001*Line1Space;
    for(double i=0; i<=Oben; i+=AbSpace)
    {
       if(i<Unten) continue;
-      string StringNr1 = DoubleToStr(i,2); // 2 digits number in object name
+      string StringNr1 = DoubleToStr(i,3); // 2 digits number in object name
       if (ObjectFind(LineText+StringNr1) != 0) // HLine not in main chartwindow
       {                     
          ObjectCreate(LineText+StringNr1, OBJ_HLINE, 0, 0, i);
@@ -88,11 +92,11 @@ void DrawLines()
       }
    }
 
-   AbSpace = 0.01*Line2Space;
+   AbSpace = 0.001*Line2Space;
    for(double j=0; j<=Oben; j+=AbSpace)
    {
       if(j<Unten) continue;
-      string StringNr2 = DoubleToStr(j,2);
+      string StringNr2 = DoubleToStr(j,3);
       if (ObjectFind(LineText+StringNr2) != 0)
       {
          ObjectCreate(LineText+StringNr2, OBJ_HLINE, 0, 0, j);
@@ -106,11 +110,11 @@ void DrawLines()
       }
    }
    
-   AbSpace = 0.01*Line3Space;
+   AbSpace = 0.001*Line3Space;
    for(double k=0; k<=Oben; k+=AbSpace)
    {
       if(k<Unten) continue;
-      string StringNr3 = DoubleToStr(k,2);
+      string StringNr3 = DoubleToStr(k,3);
       if (ObjectFind(LineText+StringNr3) != 0)
       {                     
          ObjectCreate(LineText+StringNr3, OBJ_HLINE, 0, 0, k);

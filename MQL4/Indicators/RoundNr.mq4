@@ -21,14 +21,18 @@ bool   FirstRun = true;
 
 int deinit()
 {
-   double AbSpace = 0.01*LineSpace;
-   double Oben    = MathRound(110*Hoch)/100;
-   double Unten   = MathRound(80*Tief)/100;
+   double AbSpace = 0.001*LineSpace;
+//   double Oben    = MathRound(1010*Hoch)/1000;
+//   double Unten   = MathRound(980*Tief)/1000;
+   double Oben    = Hoch;
+   double Unten   = Tief;
    for(double i=0; i<=Oben; i+=AbSpace)
    {
       if(i<Unten) { continue; }
-      ObjectDelete(LineText+DoubleToStr(i,2));
+      ObjectDelete(LineText+DoubleToStr(i,4));
    }
+   
+   FirstRun = true;
    return(0);
 }
 
@@ -36,15 +40,15 @@ int start()
 {
    if(FirstRun)
    {
-      Hoch = NormalizeDouble( High[iHighest(NULL,0,MODE_HIGH,Bars-1,0)], 2 );
-      Tief = NormalizeDouble( Low[iLowest(NULL,0,MODE_LOW,Bars-1,0)], 2 );
+      Hoch = NormalizeDouble( High[iHighest(NULL,0,MODE_HIGH,Bars-1,0)], 4 );
+      Tief = NormalizeDouble( Low[iLowest(NULL,0,MODE_LOW,Bars-1,0)], 4 );
       FirstRun = false;
    }
    else if(LineSpace != LineSpaceOld)
    {
       deinit();
-      Hoch = NormalizeDouble( High[iHighest(NULL,0,MODE_HIGH,Bars-1,0)], 2 );
-      Tief = NormalizeDouble( Low[iLowest(NULL,0,MODE_LOW,Bars-1,0)], 2 );
+      Hoch = NormalizeDouble( High[iHighest(NULL,0,MODE_HIGH,Bars-1,0)], 4 );
+      Tief = NormalizeDouble( Low[iLowest(NULL,0,MODE_LOW,Bars-1,0)], 4 );
    }
    DrawLines();
    LineSpaceOld = LineSpace;
@@ -53,14 +57,16 @@ int start()
 
 void DrawLines()
 {
-   double AbSpace = 0.01*LineSpace;
-   double Oben    = MathRound(110*Hoch)/100;
-   double Unten   = MathRound(80*Tief)/100;
+   double AbSpace = 0.001*LineSpace;
+//   double Oben    = MathRound(110*Hoch)/100;
+//   double Unten   = MathRound(80*Tief)/100;
+   double Oben    = Hoch;
+   double Unten   = Tief;
 
    for(double i=0; i<=Oben; i+=AbSpace)
    {
       if(i<Unten) { continue; }
-      string StringNr = DoubleToStr(i,2); // 2 digits number in object name
+      string StringNr = DoubleToStr(i,4); // 2 digits number in object name
       if (ObjectFind(LineText+StringNr) != 0) // HLine not in main chartwindow
       {                     
          ObjectCreate(LineText+StringNr, OBJ_HLINE, 0, 0, i);
